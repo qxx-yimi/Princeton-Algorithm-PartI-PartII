@@ -226,3 +226,197 @@ public class QuickUnionUF
 }
 ~~~
 
+### Stacks and Queues
+
+~~~java
+public class LinkedStackOfStrings
+{
+	private Node first = null;
+    
+    private class Node
+    {
+        String item;
+        Node next;
+    }
+    
+    public boolean isEmpty()
+    {
+        return first == null;
+    }
+    
+    public void push(String item)
+    {        
+        Node oldfirst = first;
+        first = new Node();
+        first.item = item;
+        first.next = oldfirst;
+    }
+    
+    public String pop()
+    {
+        String item = first.item;
+        first = first.next;
+        return item;
+    }
+}
+~~~
+
+~~~java
+public class FixedCapacityStackOfStrings
+{
+    private String[] s;
+    private int N = 0;
+    
+    public FixedCapacityStackOfStrings(int capacity)
+    {
+        s = new String[capacity];
+    }
+    
+    public boolean isEmpty()
+    {
+        return N == 0;
+    }
+    
+    public void push(String item)
+    {
+        s[N++] = item;
+    }
+    
+    public String pop()
+    {
+        String item = s[--N];
+        s[N] = null;
+        return item;
+    }
+}
+~~~
+
+~~~java
+public ResizingArrayStackOfStrings()
+{
+	s = new String[1];
+}
+
+public void push(String item)
+{
+    if(N == s.length) resize(2 * s.length)
+    s[N++] = item;
+}
+
+private void resize(int capacity)
+{
+    String[] copy = new String[capacity];
+    for(int i = 0; i < N; i++)
+        copy[i] = s[i];
+    s = copy;
+}
+
+public String pop()
+{
+    String item = s[--N];
+    s[N] = null;
+    if(N > 0 && N == s.length / 4) resize(s.length/2);
+    return item;
+}
+~~~
+
+~~~java
+public class QueueOfStrings
+{
+	private Node first = null, last = null;
+    
+    private class Node
+    {
+        String item;
+        Node next;
+    }
+    
+    public boolean isEmpty()
+    {
+        return first == null;
+    }
+    
+    public void enqueue(String item)
+    {
+        Node oldlast = last;
+        last = new Node();
+        last.item = item;
+        last.next = null;
+        if(isEmpty()) first = last;
+        else oldlast.next = last;
+    }
+    
+    public String dequeue()
+    {
+        String item = first.item;
+        first = first.next;
+        if(isEmpty()) last = null;
+        return item;
+    }
+}
+~~~
+
+~~~java
+public class Stack<Item>
+{
+	private Node first = null;
+    
+    private class Node
+    {
+        Item item;
+        Node next;
+    }
+    
+    public boolean isEmpty()
+    {
+        return first == null;
+    }
+    
+    public void push(Item item)
+    {
+        Node oldfirst = first;
+        first = new Node();
+        first.item = item;
+        first.next = oldfirst;
+    }
+    
+    public Item pop()
+    {
+        Item item = first.item;
+        first = first.next;
+        return item;
+    }
+}
+~~~
+
+~~~java
+public class FixedCapacityStack<Item>
+{
+	private Item[] s;
+    private int N = 0;
+    
+    public FixedCapacityStack(int capacity)
+    {
+        // s = new Item[capacity];  can not
+        s = (Item[]) new Object[capacity]; // ugly cast
+    }
+    
+    public boolean isEmpty()
+    {
+        return  N == 0;
+    }
+    
+    public void push(Item item)
+    {
+        s[N++] = item;
+    }
+    
+    public Item pop()
+    {
+       return s[--N];
+    }
+}
+~~~
+
+
+
